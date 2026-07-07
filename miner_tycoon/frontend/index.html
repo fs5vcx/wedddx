@@ -11,7 +11,12 @@
         <!-- 登录界面 -->
         <div id="auth-screen" class="auth-screen">
             <div class="auth-content">
-                <img class="auth-logo" id="auth-logo" alt="miner">
+                <div class="auth-logo-miner">
+                    <div class="miner-helmet"></div>
+                    <div class="miner-face"></div>
+                    <div class="miner-body"></div>
+                    <div class="miner-pickaxe"></div>
+                </div>
                 <h1>采矿大亨</h1>
                 <p class="auth-subtitle">掘金之旅</p>
                 <div class="auth-tabs">
@@ -35,59 +40,101 @@
         <div id="game-screen" class="game-screen hidden">
             <!-- 顶部资源栏 -->
             <div class="game-header">
-                <button class="header-btn" id="btn-settings">
-                    <img id="icon-settings" class="header-icon" alt="settings">
-                </button>
+                <button class="header-btn" id="btn-settings">⚙️</button>
                 <div class="header-resources">
                     <div class="res-item gold-item">
-                        <img id="icon-gold" class="res-icon-img" alt="gold">
+                        <span class="res-icon">💰</span>
                         <span class="res-value" id="gold-value">0</span>
                     </div>
                     <div class="res-item gem-item">
-                        <img id="icon-gem" class="res-icon-img" alt="gem">
+                        <span class="res-icon">💎</span>
                         <span class="res-value" id="gem-value">0</span>
                     </div>
                     <div class="res-item cash-item">
-                        <img id="icon-cash" class="res-icon-img" alt="cash">
+                        <span class="res-icon">💵</span>
                         <span class="res-value" id="cash-value">0</span>
                     </div>
                 </div>
                 <div class="header-gps">
-                    <span id="gps-value">0</span> /秒
+                    <span id="gps-value">0</span>/秒
                 </div>
-                <button class="header-btn" id="btn-music" onclick="toggleMusic()">
-                    <img id="icon-music" class="header-icon" alt="music">
-                </button>
+                <button class="header-btn" id="btn-music" onclick="toggleMusic()">🔊</button>
             </div>
 
             <!-- 游戏场景 -->
             <div class="game-scene">
-                <!-- 地面区域 - 模块化拼接 -->
+                <!-- 地面区域 -->
                 <div class="surface-area">
-                    <img class="sky-bg" id="bg-sky" alt="sky">
-                    <img class="mountain-bg" id="bg-mountains" alt="mountains">
-                    <img class="ground-bg" id="bg-ground" alt="ground">
+                    <div class="sky-bg"></div>
+                    <div class="cloud cloud1">☁️</div>
+                    <div class="cloud cloud2">☁️</div>
+                    <div class="mountain-bg">
+                        <div class="mountain m1"></div>
+                        <div class="mountain m2"></div>
+                        <div class="mountain m3"></div>
+                    </div>
+                    <div class="ground-bg"></div>
+                    <div class="grass-line"></div>
                     
                     <div class="surface-buildings">
-                        <div class="tower tower-left">
-                            <img class="tower-img" id="tower-blue" alt="tower">
+                        <div class="tower tower-blue">
+                            <div class="tower-roof"></div>
+                            <div class="tower-body">
+                                <div class="tower-window"></div>
+                                <div class="tower-window"></div>
+                            </div>
+                            <div class="tower-base"></div>
+                            <div class="tower-flag">🚩</div>
                             <div class="tower-level">L1</div>
                         </div>
-                        <div class="tower tower-right">
-                            <img class="tower-img" id="tower-green" alt="tower">
+                        <div class="tower tower-green">
+                            <div class="tower-roof"></div>
+                            <div class="tower-body">
+                                <div class="tower-window"></div>
+                                <div class="tower-window"></div>
+                            </div>
+                            <div class="tower-base"></div>
+                            <div class="tower-flag">🚩</div>
                             <div class="tower-level">L2</div>
                         </div>
                     </div>
 
                     <div class="surface-workers">
-                        <img class="gw-img" id="gw1" alt="worker">
-                        <img class="gw-img" id="gw2" alt="worker">
-                        <img class="gw-img" id="gw3" alt="worker">
+                        <div class="sw-worker sw1">
+                            <div class="sw-helmet"></div>
+                            <div class="sw-body"></div>
+                            <div class="sw-legs"></div>
+                        </div>
+                        <div class="sw-worker sw2">
+                            <div class="sw-helmet"></div>
+                            <div class="sw-body"></div>
+                            <div class="sw-legs"></div>
+                        </div>
+                        <div class="sw-worker sw3">
+                            <div class="sw-helmet"></div>
+                            <div class="sw-body"></div>
+                            <div class="sw-legs"></div>
+                        </div>
                     </div>
 
                     <div class="surface-cart">
-                        <img class="cart-img" id="mine-cart" alt="cart">
-                        <img class="cart-pusher" id="cart-worker" alt="pusher">
+                        <div class="mine-cart">
+                            <div class="cart-body"></div>
+                            <div class="cart-ore"></div>
+                            <div class="cart-wheel w1"></div>
+                            <div class="cart-wheel w2"></div>
+                        </div>
+                        <div class="cart-pusher">
+                            <div class="cp-helmet"></div>
+                            <div class="cp-body"></div>
+                            <div class="cp-arms"></div>
+                            <div class="cp-legs"></div>
+                        </div>
+                    </div>
+
+                    <div class="elevator-top">
+                        <div class="elevator-top-building"></div>
+                        <div class="elevator-top-sign">🛗</div>
                     </div>
                 </div>
 
@@ -95,21 +142,34 @@
                 <div class="underground-area">
                     <!-- 左侧电梯井 -->
                     <div class="elevator-shaft">
-                        <img class="shaft-bg-img" id="shaft-bg" alt="shaft">
+                        <div class="shaft-wall left"></div>
+                        <div class="shaft-wall right"></div>
+                        <div class="shaft-ladder"></div>
+                        <div class="shaft-cable"></div>
                         
-                        <div class="shaft-lights" id="shaft-lights"></div>
+                        <div class="shaft-lights">
+                            <div class="shaft-light"></div>
+                            <div class="shaft-light"></div>
+                            <div class="shaft-light"></div>
+                            <div class="shaft-light"></div>
+                            <div class="shaft-light"></div>
+                        </div>
                         
                         <div class="elevator-car" id="elevator-car">
-                            <img class="elevator-img" id="elevator-closed" alt="elevator">
-                            <img class="elevator-img elevator-open hidden" id="elevator-open" alt="elevator-open">
-                            <div class="elevator-worker-spot">
-                                <img class="ew-img" id="elevator-worker" alt="worker">
+                            <div class="elevator-roof"></div>
+                            <div class="elevator-body">
+                                <div class="elevator-door left-door" id="door-left"></div>
+                                <div class="elevator-door right-door" id="door-right"></div>
+                                <div class="elevator-worker-inside">
+                                    <div class="ew-helmet"></div>
+                                    <div class="ew-body"></div>
+                                </div>
                             </div>
-                            <div class="elevator-floor" id="elevator-floor">1</div>
+                            <div class="elevator-floor-indicator" id="elevator-floor">1F</div>
                         </div>
                     </div>
 
-                    <!-- 矿层区域 - 可拼接模块 -->
+                    <!-- 矿层区域 -->
                     <div class="mine-layers" id="mine-layers"></div>
                 </div>
             </div>
@@ -117,19 +177,19 @@
             <!-- 底部导航 -->
             <div class="bottom-nav">
                 <button class="nav-btn active" data-panel="miners">
-                    <img id="nav-pickaxe" class="nav-icon" alt="miners">
+                    <span class="nav-icon">⛏️</span>
                     <span>矿工</span>
                 </button>
                 <button class="nav-btn" data-panel="elevator">
-                    <img id="nav-elevator" class="nav-icon" alt="elevator">
+                    <span class="nav-icon">🛗</span>
                     <span>电梯</span>
                 </button>
                 <button class="nav-btn" data-panel="ground">
-                    <img id="nav-factory" class="nav-icon" alt="ground">
+                    <span class="nav-icon">🏭</span>
                     <span>地面</span>
                 </button>
                 <button class="nav-btn" data-panel="mines">
-                    <img id="nav-mountain" class="nav-icon" alt="mines">
+                    <span class="nav-icon">⛰️</span>
                     <span>矿山</span>
                 </button>
             </div>
@@ -148,16 +208,14 @@
             
             <div class="modal" id="settings-modal">
                 <div class="modal-body">
-                    <h3>设置</h3>
+                    <h3>⚙️ 设置</h3>
                     <div class="setting-row">
                         <span>背景音乐</span>
-                        <button onclick="toggleMusic()">
-                            <img id="setting-music-icon" class="btn-icon" alt="music">
-                        </button>
+                        <button class="toggle-btn" onclick="toggleMusic()" id="setting-music-btn">🔊</button>
                     </div>
                     <div class="setting-row">
                         <span>音效</span>
-                        <button onclick="toggleSound()">🔊</button>
+                        <button class="toggle-btn" onclick="toggleSound()">🔊</button>
                     </div>
                     <button class="btn-danger" onclick="logout()">退出登录</button>
                 </div>
@@ -169,7 +227,7 @@
                     <h3>欢迎回来！</h3>
                     <p>离线 <span id="offline-time">0</span> 分钟</p>
                     <p class="offline-gold">获得 <span id="offline-gold">0</span> 金币</p>
-                    <button class="btn-primary" onclick="collectOffline()">领取奖励</button>
+                    <button class="btn-primary" onclick="collectOffline()">💰 领取奖励</button>
                 </div>
             </div>
 
@@ -181,8 +239,8 @@
 
         <audio id="bg-music" loop>
             <source src="https://assets.mixkit.co/music/preview/mixkit-game-level-up-2059.mp3" type="audio/mp3">
+        </audio>
         
-        <script src="assets.js"></script>
         <script src="game.js"></script>
     </div>
 </body>

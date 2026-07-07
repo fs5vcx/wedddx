@@ -10,7 +10,13 @@ const gameState = {
     isGameRunning: false, lastSyncTime: 0,
     currentPanel: 'miners', selectedLayerId: null,
     musicEnabled: true, soundEnabled: true,
-    assets: GameAssets
+    oreColors: [
+        { main: '#FFD700', dark: '#FFA000', light: '#FFECB3' },
+        { main: '#FF8A65', dark: '#E64A19', light: '#FFCCBC' },
+        { main: '#E0E0E0', dark: '#9E9E9E', light: '#F5F5F5' },
+        { main: '#64B5F6', dark: '#1976D2', light: '#BBDEFB' },
+        { main: '#EF5350', dark: '#C62828', light: '#FFCDD2' }
+    ]
 };
 
 function api(endpoint, method = 'GET', data = null) {
@@ -42,98 +48,60 @@ function calculateCost(base, level) {
     return Math.floor(base * Math.pow(1.5, level - 1));
 }
 
-function getMinerForLayer(depth) {
-    const miners = ['miner', 'miner2', 'miner3'];
-    const key = miners[(depth - 1) % miners.length];
-    return gameState.assets.characters[key];
+function getOreColor(depth) {
+    return gameState.oreColors[(depth - 1) % gameState.oreColors.length];
 }
 
-function getOreForLayer(depth) {
-    const ores = ['gold', 'copper', 'silver', 'diamond', 'ruby'];
-    const key = ores[(depth - 1) % ores.length];
-    return gameState.assets.props.ores[key];
+function createMinerHTML(helmetColor = '#FFD700', bodyColor = '#4169E1') {
+    return `
+        <div class="layer-miner">
+            <div class="lm-helmet" style="background: linear-gradient(180deg, ${helmetColor}, ${adjustColor(helmetColor, -30)}); border-color: ${adjustColor(helmetColor, -50)};"></div>
+            <div class="lm-face"></div>
+            <div class="lm-body" style="background: linear-gradient(180deg, ${bodyColor}, ${adjustColor(bodyColor, -30)}); border-color: ${adjustColor(bodyColor, -50)};"></div>
+            <div class="lm-pickaxe"></div>
+        </div>
+    `;
 }
 
-function initAssetImages() {
-    const a = gameState.assets;
-    
-    document.getElementById('auth-logo').src = a.characters.miner.idle;
-    
-    document.getElementById('bg-sky').src = a.scenes.sky;
-    document.getElementById('bg-mountains').src = a.scenes.mountains;
-    document.getElementById('bg-ground').src = a.scenes.groundTop;
-    
-    document.getElementById('tower-blue').src = a.scenes.tower.blue;
-    document.getElementById('tower-green').src = a.scenes.tower.green;
-    
-    document.getElementById('gw1').src = a.characters.groundWorker.idle;
-    document.getElementById('gw2').src = a.characters.groundWorker.idle;
-    document.getElementById('gw3').src = a.characters.groundWorker.idle;
-    
-    document.getElementById('mine-cart').src = a.props.mineCart.full;
-    document.getElementById('cart-worker').src = a.characters.groundWorker.pushing;
-    
-    document.getElementById('shaft-bg').src = a.scenes.elevatorShaft;
-    document.getElementById('elevator-closed').src = a.props.elevator.closed;
-    document.getElementById('elevator-open').src = a.props.elevator.open;
-    document.getElementById('elevator-worker').src = a.characters.elevatorWorker.idle;
-    
-    document.getElementById('icon-settings').src = a.ui.icons.settings;
-    document.getElementById('icon-gold').src = a.ui.icons.gold;
-    document.getElementById('icon-gem').src = a.ui.icons.gem;
-    document.getElementById('icon-cash').src = a.ui.icons.cash;
-    document.getElementById('icon-music').src = a.ui.icons.music;
-    document.getElementById('setting-music-icon').src = a.ui.icons.music;
-    
-    document.getElementById('nav-pickaxe').src = a.ui.icons.pickaxe;
-    document.getElementById('nav-elevator').src = a.ui.icons.elevator;
-    document.getElementById('nav-factory').src = a.ui.icons.factory;
-    document.getElementById('nav-mountain').src = a.ui.icons.mountain;
-    
-    initShaftLights();
+function createOreHTML(depth) {
+    const color = getOreColor(depth);
+    return `
+        <div class="layer-ore">
+            <div class="ore-piece" style="background: linear-gradient(135deg, ${color.main}, ${color.dark});"></div>
+        </div>
+    `;
 }
 
-function initShaftLights() {
-    const container = document.getElementById('shaft-lights');
-    container.innerHTML = '';
-    for (let i = 0; i < 5; i++) {
-        const light = document.createElement('div');
-        light.className = 'shaft-light';
-        light.style.background = '#FFEB3B';
-        light.style.animationDelay = (i * 0.3) + 's';
-        container.appendChild(light);
-    }
+function adjustColor(hex, amount) {
+    const num = parseInt(hex.replace('#', ''), 16);
+    const r = Math.max(0, Math.min(255, (num >> 16) + amount));
+    const g = Math.max(0, Math.min(255, ((num >> 8) & 0x00FF) + amount));
+    const b = Math.max(0, Math.min(255, (num & 0x0000FF) + amount));
+    return '#' + (0x1000000 + (r << 16) + (g << 8) + b).toString(16).slice(1);
+}
+
+function initGameUI() {
 }
 
 function createMiningEffect(x, y) {
     const layer = document.getElementById('effect-layer');
-    const a = gameState.assets.effects;
     
-    const frames = [a.mining.frame1, a.mining.frame2, a.mining.frame3];
-    let frameIdx = 0;
+    const effect = document.createElement('div');
+    effect.className = 'mining-effect';
+    effect.textContent = '⚒️';
+    effect.style.left = (x - 15) + 'px';
+    effect.style.top = (y - 15) + 'px';
+    layer.appendChild(effect);
     
-    const spark = document.createElement('img');
-    spark.className = 'mining-spark';
-    spark.src = frames[0];
-    spark.style.left = (x - 12) + 'px';
-    spark.style.top = (y - 12) + 'px';
-    layer.appendChild(spark);
-    
-    const interval = setInterval(() => {
-        frameIdx++;
-        if (frameIdx < frames.length) {
-            spark.src = frames[frameIdx];
-        } else {
-            clearInterval(interval);
-            spark.remove();
-        }
-    }, 200);
+    setTimeout(() => {
+        effect.remove();
+    }, 700);
     
     for (let i = 0; i < 3; i++) {
         setTimeout(() => {
-            const gold = document.createElement('img');
-            gold.className = 'gold-particle';
-            gold.src = a.goldCollect.frame1;
+            const gold = document.createElement('div');
+            gold.className = 'gold-float';
+            gold.textContent = '💰';
             gold.style.left = (x + (Math.random() - 0.5) * 30) + 'px';
             gold.style.top = (y + (Math.random() - 0.5) * 20) + 'px';
             gold.style.animationDelay = (i * 0.1) + 's';
@@ -144,7 +112,7 @@ function createMiningEffect(x, y) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    initAssetImages();
+    initGameUI();
     initAuth();
     if (gameState.token) checkTokenAndLoadGame();
 });
@@ -260,21 +228,22 @@ function renderMineLayers() {
     container.innerHTML = '';
     
     const unlockedLayers = gameState.layers.filter(l => l.unlocked);
-    const a = gameState.assets;
+    
+    const helmetColors = ['#FFD700', '#FF9800', '#E91E63', '#9C27B0', '#00BCD4'];
+    const bodyColors = ['#4169E1', '#4CAF50', '#9C27B0', '#FF5722', '#009688'];
     
     unlockedLayers.forEach(layer => {
         const miner = gameState.miners[layer.id] || { count: 0, speed: 1, level: 1 };
         const layerGold = layer.base_gold_per_second * miner.count * miner.speed * (layer.efficiency || 1);
-        const minerAsset = getMinerForLayer(layer.layer_depth);
-        const oreSrc = getOreForLayer(layer.layer_depth);
+        const colorIdx = (layer.layer_depth - 1) % helmetColors.length;
         
         const layerEl = document.createElement('div');
         layerEl.className = `mine-layer ${gameState.selectedLayerId === layer.id ? 'active' : ''}`;
         layerEl.dataset.layerId = layer.id;
         
         layerEl.innerHTML = `
-            <img class="layer-miner-img" src="${minerAsset.mining}" alt="miner">
-            <img class="layer-ore-img" src="${oreSrc}" alt="ore">
+            ${createMinerHTML(helmetColors[colorIdx], bodyColors[colorIdx])}
+            ${createOreHTML(layer.layer_depth)}
             <div class="layer-number">${layer.layer_depth}</div>
             <div class="layer-info">
                 <div class="layer-name">${layer.name}</div>
@@ -303,12 +272,13 @@ function renderMineLayers() {
     if (gameState.nextLayer) {
         const unlockEl = document.createElement('div');
         unlockEl.className = 'mine-layer locked';
+        const nextDepth = gameState.nextLayer.layer_depth;
         unlockEl.innerHTML = `
-            <img class="lock-icon" src="${a.ui.badges.lock}" alt="locked">
-            <div class="layer-ore-img" style="opacity:0.3;filter:grayscale(100%);width:32px;height:32px;object-fit:contain;"></div>
+            <div class="lock-icon">🔒</div>
+            ${createOreHTML(nextDepth)}
             <div class="layer-number" style="background:#FF9800;">🔓</div>
             <div class="layer-info">
-                <div class="layer-name">解锁第${gameState.nextLayer.layer_depth}层</div>
+                <div class="layer-name">解锁第${nextDepth}层</div>
                 <div class="layer-output">${gameState.nextLayer.name}</div>
             </div>
             <button class="btn-hire" onclick="unlockNextLayer()" style="width:auto;padding:4px 8px;">
@@ -322,28 +292,28 @@ function renderMineLayers() {
 function renderPanelContent() {
     const content = document.getElementById('panel-content');
     const title = document.getElementById('panel-title');
-    const a = gameState.assets;
     
     switch (gameState.currentPanel) {
-        case 'miners': title.textContent = '矿工管理'; renderMinersPanel(content, a); break;
-        case 'elevator': title.textContent = '电梯管理'; renderElevatorPanel(content, a); break;
-        case 'ground': title.textContent = '地面管理'; renderGroundPanel(content, a); break;
-        case 'mines': title.textContent = '矿山管理'; renderMinesPanel(content, a); break;
+        case 'miners': title.textContent = '矿工管理'; renderMinersPanel(content); break;
+        case 'elevator': title.textContent = '电梯管理'; renderElevatorPanel(content); break;
+        case 'ground': title.textContent = '地面管理'; renderGroundPanel(content); break;
+        case 'mines': title.textContent = '矿山管理'; renderMinesPanel(content); break;
     }
 }
 
-function renderMinersPanel(container, a) {
+function renderMinersPanel(container) {
     const layer = gameState.layers.find(l => l.id === gameState.selectedLayerId);
     const miner = layer ? gameState.miners[layer.id] : null;
     if (!layer || !miner) {
         container.innerHTML = '<p style="text-align:center;color:#888;padding:20px;">选择矿层管理</p>';
         return;
     }
-    const minerAsset = getMinerForLayer(layer.layer_depth);
+    const colorIdx = (layer.layer_depth - 1) % gameState.oreColors.length;
+    const color = getOreColor(layer.layer_depth);
     container.innerHTML = `
         <div class="upgrade-card" onclick="hireMiner(${layer.id})">
             <div class="upgrade-info">
-                <img class="upgrade-icon-img" src="${minerAsset.idle}" alt="hire">
+                <div class="upgrade-icon-big" style="background: linear-gradient(135deg, #81D4FA, #0288D1); border-color: #01579B;">👷</div>
                 <div class="upgrade-details">
                     <div class="upgrade-name">雇佣矿工</div>
                     <div class="upgrade-desc">当前 ${miner.count} 人</div>
@@ -353,7 +323,7 @@ function renderMinersPanel(container, a) {
         </div>
         <div class="upgrade-card" onclick="upgradeMiner(${layer.id})">
             <div class="upgrade-info">
-                <img class="upgrade-icon-img" src="${a.props.pickaxe.iron}" alt="upgrade">
+                <div class="upgrade-icon-big" style="background: linear-gradient(135deg, #FFD54F, #FF8F00); border-color: #E65100;">⛏️</div>
                 <div class="upgrade-details">
                     <div class="upgrade-name">升级矿工</div>
                     <div class="upgrade-desc">Lv.${miner.level} · 速度 ${miner.speed.toFixed(1)}x</div>
@@ -363,7 +333,7 @@ function renderMinersPanel(container, a) {
         </div>
         <div class="upgrade-card">
             <div class="upgrade-info">
-                <img class="upgrade-icon-img" src="${a.characters.supervisor.miner}" alt="supervisor">
+                <div class="upgrade-icon-big" style="background: linear-gradient(135deg, #CE93D8, #7B1FA2); border-color: #4A148C;">👔</div>
                 <div class="upgrade-details">
                     <div class="upgrade-name">矿工主管</div>
                     <div class="upgrade-desc">自动管理，提升效率</div>
@@ -374,11 +344,11 @@ function renderMinersPanel(container, a) {
     `;
 }
 
-function renderElevatorPanel(container, a) {
+function renderElevatorPanel(container) {
     container.innerHTML = `
         <div class="upgrade-card" onclick="upgradeElevator()">
             <div class="upgrade-info">
-                <img class="upgrade-icon-img" src="${a.props.elevator.closed}" alt="elevator">
+                <div class="upgrade-icon-big" style="background: linear-gradient(135deg, #90A4AE, #455A64); border-color: #263238;">🛗</div>
                 <div class="upgrade-details">
                     <div class="upgrade-name">升级电梯</div>
                     <div class="upgrade-desc">Lv.${gameState.elevator.level} · 速度 ${gameState.elevator.speed.toFixed(1)}x</div>
@@ -388,7 +358,7 @@ function renderElevatorPanel(container, a) {
         </div>
         <div class="upgrade-card" onclick="hireElevatorWorker()">
             <div class="upgrade-info">
-                <img class="upgrade-icon-img" src="${a.characters.elevatorWorker.idle}" alt="ew">
+                <div class="upgrade-icon-big" style="background: linear-gradient(135deg, #64B5F6, #1565C0); border-color: #0D47A1;">🧑‍🔧</div>
                 <div class="upgrade-details">
                     <div class="upgrade-name">雇佣电梯工</div>
                     <div class="upgrade-desc">当前 ${gameState.elevatorWorker.count} 人</div>
@@ -398,7 +368,7 @@ function renderElevatorPanel(container, a) {
         </div>
         <div class="upgrade-card" onclick="upgradeElevatorWorker()">
             <div class="upgrade-info">
-                <img class="upgrade-icon-img" src="${a.props.pickaxe.iron}" alt="upgrade">
+                <div class="upgrade-icon-big" style="background: linear-gradient(135deg, #FFD54F, #FF8F00); border-color: #E65100;">⬆️</div>
                 <div class="upgrade-details">
                     <div class="upgrade-name">升级电梯工</div>
                     <div class="upgrade-desc">Lv.${gameState.elevatorWorker.level} · 效率 ${gameState.elevatorWorker.efficiency.toFixed(1)}x</div>
@@ -408,7 +378,7 @@ function renderElevatorPanel(container, a) {
         </div>
         <div class="upgrade-card">
             <div class="upgrade-info">
-                <img class="upgrade-icon-img" src="${a.characters.supervisor.elevator}" alt="supervisor">
+                <div class="upgrade-icon-big" style="background: linear-gradient(135deg, #CE93D8, #7B1FA2); border-color: #4A148C;">👔</div>
                 <div class="upgrade-details">
                     <div class="upgrade-name">电梯主管</div>
                     <div class="upgrade-desc">自动管理，提升运输</div>
@@ -419,11 +389,11 @@ function renderElevatorPanel(container, a) {
     `;
 }
 
-function renderGroundPanel(container, a) {
+function renderGroundPanel(container) {
     container.innerHTML = `
         <div class="upgrade-card" onclick="hireGroundWorker()">
             <div class="upgrade-info">
-                <img class="upgrade-icon-img" src="${a.characters.groundWorker.idle}" alt="gw">
+                <div class="upgrade-icon-big" style="background: linear-gradient(135deg, #81C784, #388E3C); border-color: #1B5E20;">👷‍♂️</div>
                 <div class="upgrade-details">
                     <div class="upgrade-name">雇佣地面工</div>
                     <div class="upgrade-desc">当前 ${gameState.groundWorker.count} 人</div>
@@ -433,7 +403,7 @@ function renderGroundPanel(container, a) {
         </div>
         <div class="upgrade-card" onclick="upgradeGroundWorker()">
             <div class="upgrade-info">
-                <img class="upgrade-icon-img" src="${a.props.pickaxe.iron}" alt="upgrade">
+                <div class="upgrade-icon-big" style="background: linear-gradient(135deg, #FFD54F, #FF8F00); border-color: #E65100;">⬆️</div>
                 <div class="upgrade-details">
                     <div class="upgrade-name">升级地面工</div>
                     <div class="upgrade-desc">Lv.${gameState.groundWorker.level} · 效率 ${gameState.groundWorker.efficiency.toFixed(1)}x</div>
@@ -443,7 +413,7 @@ function renderGroundPanel(container, a) {
         </div>
         <div class="upgrade-card">
             <div class="upgrade-info">
-                <img class="upgrade-icon-img" src="${a.characters.supervisor.ground}" alt="supervisor">
+                <div class="upgrade-icon-big" style="background: linear-gradient(135deg, #CE93D8, #7B1FA2); border-color: #4A148C;">👔</div>
                 <div class="upgrade-details">
                     <div class="upgrade-name">地面主管</div>
                     <div class="upgrade-desc">自动管理，提升变现</div>
@@ -454,13 +424,13 @@ function renderGroundPanel(container, a) {
     `;
 }
 
-function renderMinesPanel(container, a) {
+function renderMinesPanel(container) {
     const mines = [
-        { id: 1, name: '初始矿场', icon: a.props.ores.gold, cost: 0, bonus: 1.0 },
-        { id: 2, name: '铜矿山', icon: a.props.ores.copper, cost: 10000, bonus: 1.5 },
-        { id: 3, name: '银矿山', icon: a.props.ores.silver, cost: 100000, bonus: 2.0 },
-        { id: 4, name: '金矿山', icon: a.props.ores.gold, cost: 1000000, bonus: 3.0 },
-        { id: 5, name: '钻石矿', icon: a.props.ores.diamond, cost: 10000000, bonus: 5.0 }
+        { id: 1, name: '初始矿场', icon: '⛰️', cost: 0, bonus: 1.0, color: '#FFD700' },
+        { id: 2, name: '铜矿山', icon: '🟠', cost: 10000, bonus: 1.5, color: '#FF8A65' },
+        { id: 3, name: '银矿山', icon: '⚪', cost: 100000, bonus: 2.0, color: '#E0E0E0' },
+        { id: 4, name: '金矿山', icon: '🟡', cost: 1000000, bonus: 3.0, color: '#FFD700' },
+        { id: 5, name: '钻石矿', icon: '💎', cost: 10000000, bonus: 5.0, color: '#64B5F6' }
     ];
     
     let html = '';
@@ -470,7 +440,7 @@ function renderMinesPanel(container, a) {
         
         html += `<div class="upgrade-card">
             <div class="upgrade-info">
-                <img class="upgrade-icon-img" src="${mine.icon}" alt="mine">
+                <div class="upgrade-icon-big" style="background: linear-gradient(135deg, ${mine.color}, ${adjustColor(mine.color, -40)}); border-color: ${adjustColor(mine.color, -60)};">${mine.icon}</div>
                 <div class="upgrade-details">
                     <div class="upgrade-name">${mine.name}</div>
                     <div class="upgrade-desc">收益加成 ${mine.bonus}x</div>
@@ -488,8 +458,9 @@ function renderMinesPanel(container, a) {
 
 function startElevatorAnimation() {
     const elevator = document.getElementById('elevator-car');
-    const closed = document.getElementById('elevator-closed');
-    const open = document.getElementById('elevator-open');
+    const leftDoor = document.getElementById('door-left');
+    const rightDoor = document.getElementById('door-right');
+    const elevatorBody = elevator.querySelector('.elevator-body');
     const layers = gameState.layers.filter(l => l.unlocked);
     if (layers.length === 0 || !elevator) return;
     
@@ -498,20 +469,22 @@ function startElevatorAnimation() {
     function move() {
         if (!gameState.isGameRunning) return;
         
-        closed.classList.remove('hidden');
-        open.classList.add('hidden');
+        leftDoor.classList.remove('open-left');
+        rightDoor.classList.remove('open-right');
+        elevatorBody.classList.remove('worker-visible');
         
         setTimeout(() => {
             const layerHeight = 80;
             const targetY = idx * layerHeight;
             elevator.style.top = targetY + 'px';
-            document.getElementById('elevator-floor').textContent = layers[idx].layer_depth;
+            document.getElementById('elevator-floor').textContent = layers[idx].layer_depth + 'F';
             
             const travelTime = 2000 / gameState.elevator.speed;
             
             setTimeout(() => {
-                closed.classList.add('hidden');
-                open.classList.remove('hidden');
+                leftDoor.classList.add('open-left');
+                rightDoor.classList.add('open-right');
+                elevatorBody.classList.add('worker-visible');
                 
                 const layerEl = document.querySelector(`.mine-layer[data-layer-id="${layers[idx].id}"]`);
                 if (layerEl) {
@@ -543,7 +516,7 @@ function startMiningEffects() {
                 if (layerEl) {
                     const rect = layerEl.getBoundingClientRect();
                     createMiningEffect(
-                        rect.left + 30 + Math.random() * 40,
+                        rect.left + 60 + Math.random() * 60,
                         rect.top + rect.height / 2
                     );
                 }
@@ -568,6 +541,11 @@ function bindGameEvents() {
                 document.getElementById('modal-overlay').classList.remove('show');
             }
         });
+    });
+    
+    document.getElementById('modal-overlay').addEventListener('click', () => {
+        document.querySelectorAll('.modal').forEach(m => m.classList.remove('show'));
+        document.getElementById('modal-overlay').classList.remove('show');
     });
     
     document.querySelectorAll('.nav-btn').forEach(btn => {
@@ -763,8 +741,18 @@ function collectOffline() {
 function toggleMusic() {
     gameState.musicEnabled = !gameState.musicEnabled;
     const audio = document.getElementById('bg-music');
-    if (gameState.musicEnabled) { audio.play().catch(() => {}); }
-    else { audio.pause(); }
+    const btn = document.getElementById('btn-music');
+    const settingBtn = document.getElementById('setting-music-btn');
+    if (gameState.musicEnabled) { 
+        audio.play().catch(() => {}); 
+        btn.textContent = '🔊';
+        if (settingBtn) settingBtn.textContent = '🔊';
+    }
+    else { 
+        audio.pause(); 
+        btn.textContent = '🔇';
+        if (settingBtn) settingBtn.textContent = '🔇';
+    }
 }
 
 function toggleSound() {
