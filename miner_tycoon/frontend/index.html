@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>采矿大亨 - 掘金之旅</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- 登录界面 -->
+        <div id="auth-screen" class="auth-screen">
+            <div class="auth-content">
+                <img class="auth-logo" id="auth-logo" alt="miner">
+                <h1>采矿大亨</h1>
+                <p class="auth-subtitle">掘金之旅</p>
+                <div class="auth-tabs">
+                    <button class="tab-btn active" data-tab="login">登录</button>
+                    <button class="tab-btn" data-tab="register">注册</button>
+                </div>
+                <form id="login-form" class="auth-form">
+                    <input type="text" id="login-username" placeholder="用户名" required>
+                    <input type="password" id="login-password" placeholder="密码" required>
+                    <button type="submit" class="btn-primary">开始游戏</button>
+                </form>
+                <form id="register-form" class="auth-form" style="display:none;">
+                    <input type="text" id="reg-username" placeholder="用户名" required>
+                    <input type="password" id="reg-password" placeholder="密码" required>
+                    <button type="submit" class="btn-primary">立即注册</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 游戏主界面 -->
+        <div id="game-screen" class="game-screen hidden">
+            <!-- 顶部资源栏 -->
+            <div class="game-header">
+                <button class="header-btn" id="btn-settings">
+                    <img id="icon-settings" class="header-icon" alt="settings">
+                </button>
+                <div class="header-resources">
+                    <div class="res-item gold-item">
+                        <img id="icon-gold" class="res-icon-img" alt="gold">
+                        <span class="res-value" id="gold-value">0</span>
+                    </div>
+                    <div class="res-item gem-item">
+                        <img id="icon-gem" class="res-icon-img" alt="gem">
+                        <span class="res-value" id="gem-value">0</span>
+                    </div>
+                    <div class="res-item cash-item">
+                        <img id="icon-cash" class="res-icon-img" alt="cash">
+                        <span class="res-value" id="cash-value">0</span>
+                    </div>
+                </div>
+                <div class="header-gps">
+                    <span id="gps-value">0</span> /秒
+                </div>
+                <button class="header-btn" id="btn-music" onclick="toggleMusic()">
+                    <img id="icon-music" class="header-icon" alt="music">
+                </button>
+            </div>
+
+            <!-- 游戏场景 -->
+            <div class="game-scene">
+                <!-- 地面区域 - 模块化拼接 -->
+                <div class="surface-area">
+                    <img class="sky-bg" id="bg-sky" alt="sky">
+                    <img class="mountain-bg" id="bg-mountains" alt="mountains">
+                    <img class="ground-bg" id="bg-ground" alt="ground">
+                    
+                    <div class="surface-buildings">
+                        <div class="tower tower-left">
+                            <img class="tower-img" id="tower-blue" alt="tower">
+                            <div class="tower-level">L1</div>
+                        </div>
+                        <div class="tower tower-right">
+                            <img class="tower-img" id="tower-green" alt="tower">
+                            <div class="tower-level">L2</div>
+                        </div>
+                    </div>
+
+                    <div class="surface-workers">
+                        <img class="gw-img" id="gw1" alt="worker">
+                        <img class="gw-img" id="gw2" alt="worker">
+                        <img class="gw-img" id="gw3" alt="worker">
+                    </div>
+
+                    <div class="surface-cart">
+                        <img class="cart-img" id="mine-cart" alt="cart">
+                        <img class="cart-pusher" id="cart-worker" alt="pusher">
+                    </div>
+                </div>
+
+                <!-- 地下矿区 -->
+                <div class="underground-area">
+                    <!-- 左侧电梯井 -->
+                    <div class="elevator-shaft">
+                        <img class="shaft-bg-img" id="shaft-bg" alt="shaft">
+                        
+                        <div class="shaft-lights" id="shaft-lights"></div>
+                        
+                        <div class="elevator-car" id="elevator-car">
+                            <img class="elevator-img" id="elevator-closed" alt="elevator">
+                            <img class="elevator-img elevator-open hidden" id="elevator-open" alt="elevator-open">
+                            <div class="elevator-worker-spot">
+                                <img class="ew-img" id="elevator-worker" alt="worker">
+                            </div>
+                            <div class="elevator-floor" id="elevator-floor">1</div>
+                        </div>
+                    </div>
+
+                    <!-- 矿层区域 - 可拼接模块 -->
+                    <div class="mine-layers" id="mine-layers"></div>
+                </div>
+            </div>
+
+            <!-- 底部导航 -->
+            <div class="bottom-nav">
+                <button class="nav-btn active" data-panel="miners">
+                    <img id="nav-pickaxe" class="nav-icon" alt="miners">
+                    <span>矿工</span>
+                </button>
+                <button class="nav-btn" data-panel="elevator">
+                    <img id="nav-elevator" class="nav-icon" alt="elevator">
+                    <span>电梯</span>
+                </button>
+                <button class="nav-btn" data-panel="ground">
+                    <img id="nav-factory" class="nav-icon" alt="ground">
+                    <span>地面</span>
+                </button>
+                <button class="nav-btn" data-panel="mines">
+                    <img id="nav-mountain" class="nav-icon" alt="mines">
+                    <span>矿山</span>
+                </button>
+            </div>
+
+            <!-- 升级面板 -->
+            <div class="upgrade-panel" id="upgrade-panel">
+                <div class="panel-header">
+                    <h3 id="panel-title">矿工管理</h3>
+                    <button class="panel-close" id="panel-close">✕</button>
+                </div>
+                <div class="panel-content" id="panel-content"></div>
+            </div>
+
+            <!-- 弹窗 -->
+            <div class="modal-overlay" id="modal-overlay"></div>
+            
+            <div class="modal" id="settings-modal">
+                <div class="modal-body">
+                    <h3>设置</h3>
+                    <div class="setting-row">
+                        <span>背景音乐</span>
+                        <button onclick="toggleMusic()">
+                            <img id="setting-music-icon" class="btn-icon" alt="music">
+                        </button>
+                    </div>
+                    <div class="setting-row">
+                        <span>音效</span>
+                        <button onclick="toggleSound()">🔊</button>
+                    </div>
+                    <button class="btn-danger" onclick="logout()">退出登录</button>
+                </div>
+            </div>
+
+            <div class="modal" id="offline-modal">
+                <div class="modal-body">
+                    <div class="offline-icon">⏰</div>
+                    <h3>欢迎回来！</h3>
+                    <p>离线 <span id="offline-time">0</span> 分钟</p>
+                    <p class="offline-gold">获得 <span id="offline-gold">0</span> 金币</p>
+                    <button class="btn-primary" onclick="collectOffline()">领取奖励</button>
+                </div>
+            </div>
+
+            <!-- 特效层 -->
+            <div class="effect-layer" id="effect-layer"></div>
+
+            <div class="toast-container" id="toast-container"></div>
+        </div>
+
+        <audio id="bg-music" loop>
+            <source src="https://assets.mixkit.co/music/preview/mixkit-game-level-up-2059.mp3" type="audio/mp3">
+        
+        <script src="assets.js"></script>
+        <script src="game.js"></script>
+    </div>
+</body>
+</html>

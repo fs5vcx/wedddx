@@ -42,51 +42,52 @@ switch ($action) {
             $response = ['status' => 'error', 'message' => '无效的令牌'];
             break;
         }
+        $userId = $user['user_id'];
         $subAction = $parts[1] ?? '';
         switch ($subAction) {
             case 'status':
-                $response = getGameStatus($user['id']);
+                $response = getGameStatus($userId);
                 break;
             case 'mine':
-                $response = mine($user['id']);
+                $response = mine($userId);
                 break;
             case 'unlock_layer':
                 $data = json_decode(file_get_contents('php://input'), true);
-                $response = unlockLayer($user['id'], $data);
+                $response = unlockLayer($userId, $data);
                 break;
             case 'upgrade_miner':
                 $data = json_decode(file_get_contents('php://input'), true);
-                $response = upgradeMiner($user['id'], $data);
+                $response = upgradeMiner($userId, $data);
                 break;
             case 'hire_miner':
                 $data = json_decode(file_get_contents('php://input'), true);
-                $response = hireMiner($user['id'], $data);
+                $response = hireMiner($userId, $data);
                 break;
             case 'upgrade_elevator':
-                $response = upgradeElevator($user['id']);
+                $response = upgradeElevator($userId);
                 break;
             case 'hire_elevator_worker':
-                $response = hireElevatorWorker($user['id']);
+                $response = hireElevatorWorker($userId);
                 break;
             case 'upgrade_elevator_worker':
-                $response = upgradeElevatorWorker($user['id']);
+                $response = upgradeElevatorWorker($userId);
                 break;
             case 'hire_ground_worker':
-                $response = hireGroundWorker($user['id']);
+                $response = hireGroundWorker($userId);
                 break;
             case 'upgrade_ground_worker':
-                $response = upgradeGroundWorker($user['id']);
+                $response = upgradeGroundWorker($userId);
                 break;
             case 'unlock_mine':
                 $data = json_decode(file_get_contents('php://input'), true);
-                $response = unlockMine($user['id'], $data);
+                $response = unlockMine($userId, $data);
                 break;
             case 'claim_achievement':
                 $data = json_decode(file_get_contents('php://input'), true);
-                $response = claimAchievement($user['id'], $data);
+                $response = claimAchievement($userId, $data);
                 break;
             case 'collect_offline':
-                $response = collectOfflineRewards($user['id']);
+                $response = collectOfflineRewards($userId);
                 break;
             default:
                 $response = ['status' => 'error', 'message' => '未知的游戏操作'];

@@ -1,0 +1,618 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    overflow: hidden;
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+#app { width: 100vw; height: 100vh; position: relative; overflow: hidden; }
+.hidden { display: none !important; }
+img { -webkit-user-drag: none; user-drag: none; }
+
+/* ===== 登录界面 ===== */
+.auth-screen {
+    width: 100%; height: 100%;
+    display: flex; justify-content: center; align-items: center;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+}
+
+.auth-content { text-align: center; width: 85%; max-width: 400px; }
+
+.auth-logo {
+    width: 100px; height: 100px;
+    margin-bottom: 12px;
+    animation: float 2s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+.auth-content h1 {
+    color: #FFD700; font-size: 2.2rem;
+    text-shadow: 0 0 15px rgba(255,215,0,0.5);
+    margin-bottom: 2px;
+}
+
+.auth-subtitle { color: #a0aec0; font-size: 0.9rem; margin-bottom: 20px; }
+
+.auth-tabs {
+    display: flex; justify-content: center; gap: 8px; margin-bottom: 16px;
+}
+
+.tab-btn {
+    padding: 8px 26px; border: none; border-radius: 18px;
+    background: rgba(255,255,255,0.1); color: #fff; font-size: 0.95rem; cursor: pointer;
+}
+
+.tab-btn.active { background: #FFD700; color: #000; font-weight: bold; }
+
+.auth-form { display: flex; flex-direction: column; gap: 10px; }
+
+.auth-form input {
+    padding: 12px; border: 2px solid rgba(255,255,255,0.2); border-radius: 8px;
+    background: rgba(0,0,0,0.3); color: #fff; font-size: 0.95rem; outline: none;
+}
+
+.auth-form input:focus { border-color: #FFD700; }
+
+.btn-primary {
+    padding: 12px; border: none; border-radius: 8px;
+    background: linear-gradient(135deg, #FFD700, #DAA520);
+    color: #000; font-size: 1rem; font-weight: bold; cursor: pointer;
+}
+
+.btn-primary:active { transform: scale(0.98); }
+
+/* ===== 游戏主界面 ===== */
+.game-screen {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    position: relative;
+}
+
+/* 顶部资源栏 */
+.game-header {
+    display: flex; align-items: center; gap: 6px;
+    padding: 6px 8px;
+    padding-top: calc(6px + env(safe-area-inset-top));
+    background: linear-gradient(180deg, #2d3748, #1a202c);
+    border-bottom: 2px solid #5D4037;
+    z-index: 100;
+    position: relative;
+}
+
+.header-btn {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(255,255,255,0.1); border: 2px solid rgba(255,255,255,0.2);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+
+.header-icon { width: 18px; height: 18px; }
+
+.header-resources {
+    display: flex; gap: 6px; flex: 1; justify-content: center;
+}
+
+.res-item {
+    display: flex; align-items: center; gap: 3px;
+    background: rgba(0,0,0,0.3); padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem; font-weight: bold;
+    border: 1px solid #FFD700;
+}
+
+.res-icon-img { width: 16px; height: 16px; }
+.res-value { color: #FFD700; }
+
+.gem-item { border-color: #9C27B0; }
+.gem-item .res-value { color: #E91E63; }
+
+.cash-item { border-color: #4CAF50; }
+.cash-item .res-value { color: #4CAF50; }
+
+.header-gps { font-size: 0.65rem; color: #a0aec0; flex-shrink: 0; }
+
+/* ===== 游戏场景 ===== */
+.game-scene {
+    flex: 1; display: flex; flex-direction: column;
+    overflow: hidden; position: relative;
+}
+
+/* 地面区域 */
+.surface-area {
+    height: 32%; position: relative; overflow: hidden;
+}
+
+.sky-bg {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 60%;
+    object-fit: cover;
+}
+
+.mountain-bg {
+    position: absolute; bottom: 40%; left: 0;
+    width: 100%; height: 35%;
+    object-fit: cover;
+}
+
+.ground-bg {
+    position: absolute; bottom: 0; left: 0;
+    width: 100%; height: 45%;
+    object-fit: cover;
+}
+
+.surface-buildings {
+    position: absolute; bottom: 8px; left: 0; width: 100%;
+    display: flex; justify-content: space-between;
+    padding: 0 12px;
+    pointer-events: none;
+}
+
+.tower { position: relative; width: 65px; height: 75px; }
+
+.tower-img {
+    width: 100%; height: 100%;
+    object-fit: contain;
+}
+
+.tower-level {
+    position: absolute; top: -4px; right: -6px;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: #FFD700; color: #000;
+    font-size: 0.55rem; font-weight: bold;
+    display: flex; align-items: center; justify-content: center;
+    border: 2px solid #DAA520;
+}
+
+.surface-workers {
+    position: absolute; bottom: 15px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; gap: 10px;
+}
+
+.gw-img {
+    width: 28px; height: 28px;
+    object-fit: contain;
+    animation: worker-bob 0.8s ease-in-out infinite;
+}
+
+.gw-img:nth-child(2) { animation-delay: 0.2s; }
+.gw-img:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes worker-bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+.surface-cart {
+    position: absolute; bottom: 5px; left: 50%;
+    transform: translateX(-30%);
+    display: flex; align-items: flex-end;
+}
+
+.cart-img {
+    width: 50px; height: 35px;
+    object-fit: contain;
+    animation: cart-shake 0.5s ease-in-out infinite;
+}
+
+@keyframes cart-shake {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(2px); }
+}
+
+.cart-pusher {
+    width: 25px; height: 30px;
+    object-fit: contain;
+    margin-left: -5px;
+    animation: pusher-push 0.5s ease-in-out infinite;
+}
+
+@keyframes pusher-push {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(-2px); }
+}
+
+/* ===== 地下矿区 ===== */
+.underground-area {
+    flex: 1; display: flex; overflow: hidden;
+    background: linear-gradient(180deg, #8B4513, #654321);
+}
+
+/* 电梯井 */
+.elevator-shaft {
+    width: 65px; position: relative; overflow: hidden;
+    border-right: 2px solid #5D4037;
+    flex-shrink: 0;
+}
+
+.shaft-bg-img {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+}
+
+.shaft-lights {
+    position: absolute; width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    justify-content: space-around;
+    padding: 30px 0;
+    pointer-events: none;
+}
+
+.shaft-light {
+    width: 10px; height: 10px; margin: 0 auto;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #FFEB3B, 0 0 15px #FF9800;
+    animation: light-flicker 1.5s ease-in-out infinite;
+}
+
+@keyframes light-flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.elevator-car {
+    position: absolute; left: 50%; transform: translateX(-50%);
+    width: 52px; height: 60px; z-index: 10;
+    transition: top 2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.elevator-img {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: contain;
+}
+
+.elevator-worker-spot {
+    position: absolute; top: 12px; left: 50%;
+    transform: translateX(-50%);
+    width: 22px; height: 22px;
+}
+
+.ew-img {
+    width: 100%; height: 100%;
+    object-fit: contain;
+    animation: worker-bob 0.6s ease-in-out infinite;
+}
+
+.elevator-floor {
+    position: absolute; top: 2px; right: -10px;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: #FFD700; color: #000;
+    font-size: 0.55rem; font-weight: bold;
+    display: flex; align-items: center; justify-content: center;
+    border: 2px solid #DAA520;
+}
+
+/* ===== 矿层区域 ===== */
+.mine-layers {
+    flex: 1; padding: 6px; display: flex; flex-direction: column;
+    gap: 6px; overflow-y: auto;
+}
+
+.mine-layer {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(0,0,0,0.35); border-radius: 10px;
+    padding: 6px 8px; border: 2px solid #5D4037;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.mine-layer:active { transform: scale(0.98); }
+.mine-layer.active { border-color: #FFD700; background: rgba(255,215,0,0.08); }
+
+.layer-bg {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.layer-miner-img {
+    width: 42px; height: 42px;
+    object-fit: contain;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    animation: miner-mining 1s ease-in-out infinite;
+}
+
+@keyframes miner-mining {
+    0%, 100% { transform: rotate(-3deg); }
+    50% { transform: rotate(3deg); }
+}
+
+.layer-ore-img {
+    width: 32px; height: 32px;
+    object-fit: contain;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    animation: ore-glow 2s ease-in-out infinite;
+}
+
+@keyframes ore-glow {
+    0%, 100% { filter: brightness(1); transform: scale(1); }
+    50% { filter: brightness(1.3); transform: scale(1.05); }
+}
+
+.layer-number {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: #FFD700; color: #000;
+    font-size: 0.7rem; font-weight: bold;
+    display: flex; align-items: center; justify-content: center;
+    border: 2px solid #DAA520;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.layer-info {
+    flex: 1; min-width: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.layer-name {
+    font-size: 0.8rem; font-weight: bold; color: #fff;
+    margin-bottom: 2px;
+}
+
+.layer-output {
+    font-size: 0.65rem; color: #a0aec0;
+}
+
+.layer-actions {
+    display: flex; flex-direction: column; gap: 3px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.btn-hire, .btn-upgrade {
+    padding: 4px 6px; border: none; border-radius: 5px;
+    font-size: 0.6rem; font-weight: bold;
+    cursor: pointer; white-space: nowrap;
+}
+
+.btn-hire { background: linear-gradient(135deg, #48BB78, #38A169); color: #fff; }
+.btn-upgrade { background: linear-gradient(135deg, #4299E1, #3182CE); color: #fff; }
+.btn-hire:disabled, .btn-upgrade:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* 解锁层 */
+.mine-layer.locked {
+    background: rgba(255,152,0,0.15);
+    border-color: #FF9800;
+}
+
+.lock-icon {
+    width: 32px; height: 32px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+/* ===== 底部导航 ===== */
+.bottom-nav {
+    position: fixed; bottom: 0; left: 0; width: 100%;
+    display: flex; background: rgba(0,0,0,0.92);
+    padding: 5px 0;
+    padding-bottom: calc(5px + env(safe-area-inset-bottom));
+    border-top: 2px solid #5D4037;
+    z-index: 200;
+}
+
+.nav-btn {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    gap: 2px; padding: 3px 0;
+    background: none; border: none;
+    color: #a0aec0; cursor: pointer;
+    font-size: 0.6rem;
+    transition: all 0.2s;
+}
+
+.nav-icon {
+    width: 24px; height: 24px;
+    object-fit: contain;
+    filter: grayscale(50%);
+}
+
+.nav-btn.active { color: #FFD700; }
+.nav-btn.active .nav-icon { filter: none; transform: scale(1.1); }
+
+/* ===== 升级面板 ===== */
+.upgrade-panel {
+    position: fixed; bottom: 0; left: 0; width: 100%;
+    background: #4a5568;
+    border-radius: 18px 18px 0 0;
+    box-shadow: 0 -6px 24px rgba(0,0,0,0.4);
+    z-index: 150;
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    max-height: 55vh;
+    display: flex; flex-direction: column;
+}
+
+.upgrade-panel.open { transform: translateY(0); }
+
+.panel-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 16px;
+    border-bottom: 2px solid #2d3748;
+}
+
+.panel-header h3 { color: #fff; font-size: 1rem; }
+
+.panel-close {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    border: none; color: #fff;
+    font-size: 0.8rem; cursor: pointer;
+}
+
+.panel-content {
+    flex: 1; padding: 10px 14px;
+    overflow-y: auto;
+}
+
+.upgrade-card {
+    background: rgba(0,0,0,0.3);
+    border-radius: 8px;
+    padding: 8px 10px;
+    margin-bottom: 6px;
+    display: flex; justify-content: space-between; align-items: center;
+    cursor: pointer;
+}
+
+.upgrade-info { display: flex; align-items: center; gap: 8px; }
+
+.upgrade-icon-img {
+    width: 32px; height: 32px;
+    object-fit: contain;
+    border-radius: 6px;
+}
+
+.upgrade-details { display: flex; flex-direction: column; }
+.upgrade-name { font-size: 0.8rem; font-weight: bold; color: #fff; }
+.upgrade-desc { font-size: 0.65rem; color: #a0aec0; }
+.upgrade-cost { font-size: 0.75rem; font-weight: bold; color: #FFD700; }
+
+/* ===== 弹窗 ===== */
+.modal-overlay {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 250; display: none;
+}
+
+.modal-overlay.show { display: block; }
+
+.modal {
+    position: fixed; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    background: #4a5568;
+    border-radius: 18px;
+    width: 85%; max-width: 320px;
+    z-index: 300; display: none;
+}
+
+.modal.show { display: block; transform: translate(-50%, -50%) scale(1); }
+
+.modal-body {
+    padding: 20px;
+    text-align: center;
+}
+
+.modal-body h3 {
+    color: #fff; font-size: 1.1rem;
+    margin-bottom: 14px;
+}
+
+.setting-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 10px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    color: #fff;
+    font-size: 0.85rem;
+}
+
+.setting-row button {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+}
+
+.btn-icon { width: 16px; height: 16px; }
+
+.btn-danger {
+    padding: 10px; border: none; border-radius: 8px;
+    background: #E53E3E; color: #fff;
+    font-size: 0.9rem; font-weight: bold;
+    cursor: pointer; width: 100%;
+    margin-top: 8px;
+}
+
+.offline-icon { font-size: 2.5rem; margin-bottom: 10px; }
+.modal-body p { color: #a0aec0; font-size: 0.85rem; margin-bottom: 6px; }
+.offline-gold { color: #FFD700 !important; font-weight: bold; font-size: 1rem !important; }
+
+/* ===== 特效层 ===== */
+.effect-layer {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 500;
+}
+
+.mining-spark {
+    position: absolute;
+    width: 24px; height: 24px;
+    object-fit: contain;
+    animation: spark-fly 0.8s ease-out forwards;
+}
+
+@keyframes spark-fly {
+    0% { opacity: 1; transform: scale(0.5) translateY(0); }
+    50% { opacity: 1; transform: scale(1.2) translateY(-20px); }
+    100% { opacity: 0; transform: scale(0.8) translateY(-40px); }
+}
+
+.gold-particle {
+    position: absolute;
+    width: 16px; height: 16px;
+    object-fit: contain;
+    animation: gold-fly 1s ease-out forwards;
+}
+
+@keyframes gold-fly {
+    0% { opacity: 1; transform: translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateY(-60px) scale(0.5); }
+}
+
+/* ===== Toast ===== */
+.toast-container {
+    position: fixed; top: 60px; left: 50%;
+    transform: translateX(-50%);
+    z-index: 400;
+    display: flex; flex-direction: column; gap: 6px;
+}
+
+.toast {
+    background: rgba(0,0,0,0.85);
+    padding: 6px 14px;
+    border-radius: 14px;
+    color: #fff; font-size: 0.8rem;
+    animation: toast-anim 2.5s ease forwards;
+}
+
+@keyframes toast-anim {
+    0% { opacity: 0; transform: translateY(-6px); }
+    10% { opacity: 1; transform: translateY(0); }
+    80% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-6px); }
+}
+
+/* ===== 响应式 ===== */
+@media (min-width: 768px) {
+    .game-screen {
+        max-width: 480px; margin: 0 auto;
+        border-left: 2px solid #5D4037;
+        border-right: 2px solid #5D4037;
+    }
+    .bottom-nav {
+        max-width: 480px; left: 50%;
+        transform: translateX(-50%);
+    }
+}
