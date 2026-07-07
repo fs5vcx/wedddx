@@ -36,101 +36,20 @@ body {
 }
 
 .auth-logo-miner {
-    width: 100px; height: 100px;
+    width: 100px;
+    height: 100px;
     margin: 0 auto 16px;
     position: relative;
+    background-image: url('assets/sprites.png');
+    background-size: 600px 800px;
+    background-position: 0px -8px;
+    background-repeat: no-repeat;
     animation: float 2s ease-in-out infinite;
 }
 
 @keyframes float {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-8px); }
-}
-
-.miner-helmet {
-    position: absolute; top: 5px; left: 50%;
-    transform: translateX(-50%);
-    width: 50px; height: 28px;
-    background: linear-gradient(180deg, #FFD700, #FFA500);
-    border-radius: 25px 25px 5px 5px;
-    border: 2px solid #B8860B;
-}
-
-.miner-helmet::after {
-    content: '';
-    position: absolute; top: 6px; left: 50%;
-    transform: translateX(-50%);
-    width: 14px; height: 14px;
-    background: radial-gradient(circle, #FFFF00, #FFA500);
-    border-radius: 50%;
-    box-shadow: 0 0 10px #FFD700;
-}
-
-.miner-face {
-    position: absolute; top: 28px; left: 50%;
-    transform: translateX(-50%);
-    width: 42px; height: 30px;
-    background: #FFDAB9;
-    border-radius: 8px;
-    border: 2px solid #DEB887;
-}
-
-.miner-face::before {
-    content: '◡◡';
-    position: absolute; top: 6px; left: 50%;
-    transform: translateX(-50%);
-    font-size: 10px;
-    color: #333;
-    letter-spacing: 2px;
-}
-
-.miner-face::after {
-    content: '◡';
-    position: absolute; bottom: 3px; left: 50%;
-    transform: translateX(-50%);
-    font-size: 10px;
-    color: #333;
-}
-
-.miner-body {
-    position: absolute; top: 55px; left: 50%;
-    transform: translateX(-50%);
-    width: 50px; height: 35px;
-    background: linear-gradient(180deg, #4169E1, #1E3A8A);
-    border-radius: 8px 8px 4px 4px;
-    border: 2px solid #1E40AF;
-}
-
-.miner-body::before {
-    content: '';
-    position: absolute; top: 8px; left: 50%;
-    transform: translateX(-50%);
-    width: 20px; height: 8px;
-    background: #FFD700;
-    border-radius: 2px;
-}
-
-.miner-pickaxe {
-    position: absolute; top: 50px; right: 8px;
-    width: 6px; height: 30px;
-    background: linear-gradient(180deg, #8B4513, #654321);
-    transform: rotate(-20deg);
-    transform-origin: top center;
-    animation: pickaxe-swing 1s ease-in-out infinite;
-}
-
-@keyframes pickaxe-swing {
-    0%, 100% { transform: rotate(-30deg); }
-    50% { transform: rotate(10deg); }
-}
-
-.miner-pickaxe::before {
-    content: '';
-    position: absolute; top: -6px; left: 50%;
-    transform: translateX(-50%);
-    width: 18px; height: 10px;
-    background: linear-gradient(180deg, #C0C0C0, #808080);
-    border-radius: 3px 3px 0 0;
 }
 
 .auth-content h1 {
@@ -481,59 +400,30 @@ body {
 }
 
 .sw-worker {
-    width: 22px; height: 30px;
+    width: 28px;
+    height: 28px;
     position: relative;
+    background-image: url('assets/sprites.png');
+    background-size: 168px 224px;
+    background-repeat: no-repeat;
     animation: worker-walk 0.6s ease-in-out infinite;
 }
 
-.sw-worker:nth-child(2) { animation-delay: 0.15s; }
-.sw-worker:nth-child(3) { animation-delay: 0.3s; }
+.sw-worker.sprite-ground_worker {
+    background-position: -28px -2px;
+}
+
+.sw-worker.sprite-miner_idle {
+    background-position: 0px -2px;
+}
+
+.sw-worker.sprite-miner2_idle {
+    background-position: -84px -2px;
+}
 
 @keyframes worker-walk {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-2px); }
-}
-
-.sw-helmet {
-    position: absolute; top: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 18px; height: 10px;
-    background: linear-gradient(180deg, #FFD700, #FFA500);
-    border-radius: 9px 9px 2px 2px;
-    border: 1.5px solid #B8860B;
-}
-
-.sw-helmet::after {
-    content: '';
-    position: absolute; top: 2px; left: 50%;
-    transform: translateX(-50%);
-    width: 6px; height: 6px;
-    background: radial-gradient(circle, #FFFF00, #FFA500);
-    border-radius: 50%;
-}
-
-.sw-body {
-    position: absolute; top: 9px; left: 50%;
-    transform: translateX(-50%);
-    width: 16px; height: 14px;
-    background: linear-gradient(180deg, #4CAF50, #388E3C);
-    border-radius: 3px 3px 2px 2px;
-    border: 1.5px solid #2E7D32;
-}
-
-.sw-legs {
-    position: absolute; bottom: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 12px; height: 7px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.sw-legs::before, .sw-legs::after {
-    content: '';
-    width: 5px; height: 7px;
-    background: #1565C0;
-    border-radius: 0 0 2px 2px;
 }
 
 /* 矿车 */
@@ -608,56 +498,20 @@ body {
 
 /* 推车工人 */
 .cart-pusher {
-    width: 20px; height: 32px;
+    width: 28px;
+    height: 28px;
     position: relative;
     margin-left: -2px;
+    background-image: url('assets/sprites.png');
+    background-size: 168px 224px;
+    background-position: -28px -2px;
+    background-repeat: no-repeat;
     animation: pusher-push 0.5s ease-in-out infinite;
 }
 
 @keyframes pusher-push {
     0%, 100% { transform: rotate(3deg); }
     50% { transform: rotate(-3deg); }
-}
-
-.cp-helmet {
-    position: absolute; top: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 16px; height: 9px;
-    background: linear-gradient(180deg, #FFD700, #FFA500);
-    border-radius: 8px 8px 2px 2px;
-    border: 1.5px solid #B8860B;
-}
-
-.cp-body {
-    position: absolute; top: 8px; left: 50%;
-    transform: translateX(-50%);
-    width: 14px; height: 14px;
-    background: linear-gradient(180deg, #4CAF50, #388E3C);
-    border-radius: 3px;
-    border: 1.5px solid #2E7D32;
-}
-
-.cp-arms {
-    position: absolute; top: 12px; left: -3px;
-    width: 20px; height: 4px;
-    background: #FFDAB9;
-    border-radius: 2px;
-    transform: rotate(-20deg);
-}
-
-.cp-legs {
-    position: absolute; bottom: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 10px; height: 8px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.cp-legs::before, .cp-legs::after {
-    content: '';
-    width: 4px; height: 8px;
-    background: #1565C0;
-    border-radius: 0 0 2px 2px;
 }
 
 /* 电梯顶部 */
@@ -861,33 +715,20 @@ body {
 
 .elevator-worker-inside {
     position: absolute;
-    top: 6px; left: 50%;
+    top: 4px; left: 50%;
     transform: translateX(-50%);
-    width: 18px; height: 26px;
+    width: 26px;
+    height: 26px;
+    background-image: url('assets/sprites.png');
+    background-size: 156px 208px;
+    background-position: 0px -2px;
+    background-repeat: no-repeat;
     opacity: 0;
     transition: opacity 0.3s;
 }
 
 .elevator-body.worker-visible .elevator-worker-inside {
     opacity: 1;
-}
-
-.ew-helmet {
-    position: absolute; top: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 14px; height: 8px;
-    background: linear-gradient(180deg, #FF9800, #F57C00);
-    border-radius: 7px 7px 2px 2px;
-    border: 1.5px solid #E65100;
-}
-
-.ew-body {
-    position: absolute; top: 7px; left: 50%;
-    transform: translateX(-50%);
-    width: 12px; height: 15px;
-    background: linear-gradient(180deg, #2196F3, #1565C0);
-    border-radius: 2px;
-    border: 1.5px solid #0D47A1;
 }
 
 .elevator-floor-indicator {
@@ -948,12 +789,16 @@ body {
     pointer-events: none;
 }
 
-/* 矿工角色 */
+/* 矿工角色 - 使用精灵图 */
 .layer-miner {
-    width: 36px; height: 40px;
+    width: 56px;
+    height: 56px;
     flex-shrink: 0;
     position: relative;
     z-index: 1;
+    background-image: url('assets/sprites.png');
+    background-size: 336px 448px;
+    background-repeat: no-repeat;
     animation: miner-bob 0.8s ease-in-out infinite;
 }
 
@@ -962,92 +807,16 @@ body {
     50% { transform: rotate(3deg) translateY(-2px); }
 }
 
-.lm-helmet {
-    position: absolute; top: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 24px; height: 13px;
-    background: linear-gradient(180deg, #FFD700, #FFA500);
-    border-radius: 12px 12px 2px 2px;
-    border: 1.5px solid #B8860B;
-    z-index: 2;
+.layer-miner.sprite-miner_idle {
+    background-position: 0px -4px;
 }
 
-.lm-helmet::after {
-    content: '';
-    position: absolute; top: 2px; left: 50%;
-    transform: translateX(-50%);
-    width: 9px; height: 9px;
-    background: radial-gradient(circle, #FFFF00, #FFA500);
-    border-radius: 50%;
-    box-shadow: 0 0 8px #FFD700;
-    animation: helmet-light 1.5s ease-in-out infinite;
+.layer-miner.sprite-miner2_idle {
+    background-position: -168px -4px;
 }
 
-@keyframes helmet-light {
-    0%, 100% { box-shadow: 0 0 6px #FFD700; }
-    50% { box-shadow: 0 0 12px #FFD700, 0 0 20px rgba(255,215,0,0.5); }
-}
-
-.lm-face {
-    position: absolute; top: 11px; left: 50%;
-    transform: translateX(-50%);
-    width: 20px; height: 13px;
-    background: #FFDAB9;
-    border-radius: 5px;
-    border: 1.5px solid #DEB887;
-    z-index: 1;
-}
-
-.lm-face::before {
-    content: '';
-    position: absolute; top: 4px; left: 4px;
-    width: 3px; height: 3px;
-    background: #333;
-    border-radius: 50%;
-    box-shadow: 7px 0 0 #333;
-}
-
-.lm-body {
-    position: absolute; top: 22px; left: 50%;
-    transform: translateX(-50%);
-    width: 26px; height: 18px;
-    background: linear-gradient(180deg, #4169E1, #1E3A8A);
-    border-radius: 5px 5px 3px 3px;
-    border: 1.5px solid #1E40AF;
-}
-
-.lm-body::before {
-    content: '';
-    position: absolute; top: 3px; left: 50%;
-    transform: translateX(-50%);
-    width: 10px; height: 4px;
-    background: #FFD700;
-    border-radius: 1px;
-}
-
-.lm-pickaxe {
-    position: absolute; top: 18px; right: -10px;
-    width: 4px; height: 24px;
-    background: linear-gradient(180deg, #8B4513, #654321);
-    transform-origin: top center;
-    animation: pickaxe-mining 0.5s ease-in-out infinite;
-    z-index: 3;
-}
-
-@keyframes pickaxe-mining {
-    0%, 100% { transform: rotate(-45deg); }
-    50% { transform: rotate(15deg); }
-}
-
-.lm-pickaxe::before {
-    content: '';
-    position: absolute; top: -5px; left: 50%;
-    transform: translateX(-50%);
-    width: 16px; height: 8px;
-    background: linear-gradient(180deg, #C0C0C0, #707070);
-    border-radius: 2px 2px 0 0;
-    border: 1px solid #505050;
-    border-bottom: none;
+.layer-miner.sprite-miner3_idle {
+    background-position: -280px -4px;
 }
 
 /* 矿石 */

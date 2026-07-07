@@ -31,51 +31,51 @@
     background-position: -640px -0px;
 }
 
-.sprite-elevator_worker_idle {
+.sprite-elevator_worker {
     background-position: -0px -128px;
 }
 
-.sprite-elevator_worker_working {
+.sprite-ground_worker {
     background-position: -128px -128px;
 }
 
-.sprite-ground_worker_idle {
+.sprite-supervisor {
     background-position: -256px -128px;
 }
 
-.sprite-ground_worker_pushing {
+.sprite-shopkeeper {
     background-position: -384px -128px;
 }
 
-.sprite-supervisor_miner {
+.sprite-engineer {
     background-position: -512px -128px;
 }
 
-.sprite-supervisor_elevator {
+.sprite-chef {
     background-position: -640px -128px;
 }
 
-.sprite-elevator_closed {
+.sprite-pickaxe_iron {
     background-position: -0px -256px;
 }
 
-.sprite-elevator_open {
+.sprite-pickaxe_gold {
     background-position: -128px -256px;
 }
 
-.sprite-minecart_empty {
+.sprite-pickaxe_diamond {
     background-position: -256px -256px;
 }
 
-.sprite-minecart_full {
+.sprite-ore_small {
     background-position: -384px -256px;
 }
 
-.sprite-pickaxe_iron {
+.sprite-gem_ruby {
     background-position: -512px -256px;
 }
 
-.sprite-pickaxe_gold {
+.sprite-gem_emerald {
     background-position: -640px -256px;
 }
 
@@ -123,31 +123,31 @@
     background-position: -512px -512px;
 }
 
-.sprite-icon_pickaxe {
+.sprite-icon_star {
     background-position: -640px -512px;
 }
 
-.sprite-icon_elevator {
+.sprite-icon_lock {
     background-position: -0px -640px;
 }
 
-.sprite-icon_factory {
+.sprite-icon_check {
     background-position: -128px -640px;
 }
 
-.sprite-icon_mountain {
+.sprite-icon_pickaxe {
     background-position: -256px -640px;
 }
 
-.sprite-icon_lock {
+.sprite-icon_elevator {
     background-position: -384px -640px;
 }
 
-.sprite-icon_check {
+.sprite-icon_factory {
     background-position: -512px -640px;
 }
 
-.sprite-icon_star {
+.sprite-icon_mountain {
     background-position: -640px -640px;
 }
 
@@ -159,19 +159,19 @@
     background-position: -128px -768px;
 }
 
-.sprite-elevator_top {
+.sprite-tower_red {
     background-position: -256px -768px;
 }
 
-.sprite-mine_tunnel {
+.sprite-minecart_empty {
     background-position: -384px -768px;
 }
 
-.sprite-mine_lamp {
+.sprite-minecart_full {
     background-position: -512px -768px;
 }
 
-.sprite-flag_red {
+.sprite-elevator_closed {
     background-position: -640px -768px;
 }
 

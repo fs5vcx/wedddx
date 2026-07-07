@@ -12,12 +12,7 @@
         <!-- 登录界面 -->
         <div id="auth-screen" class="auth-screen">
             <div class="auth-content">
-                <div class="auth-logo-miner">
-                    <div class="miner-helmet"></div>
-                    <div class="miner-face"></div>
-                    <div class="miner-body"></div>
-                    <div class="miner-pickaxe"></div>
-                </div>
+                <div class="auth-logo-miner sprite sprite-miner_idle"></div>
                 <h1>采矿大亨</h1>
                 <p class="auth-subtitle">掘金之旅</p>
                 <div class="auth-tabs">
@@ -101,21 +96,9 @@
                     </div>
 
                     <div class="surface-workers">
-                        <div class="sw-worker sw1">
-                            <div class="sw-helmet"></div>
-                            <div class="sw-body"></div>
-                            <div class="sw-legs"></div>
-                        </div>
-                        <div class="sw-worker sw2">
-                            <div class="sw-helmet"></div>
-                            <div class="sw-body"></div>
-                            <div class="sw-legs"></div>
-                        </div>
-                        <div class="sw-worker sw3">
-                            <div class="sw-helmet"></div>
-                            <div class="sw-body"></div>
-                            <div class="sw-legs"></div>
-                        </div>
+                        <div class="sw-worker sprite sprite-ground_worker"></div>
+                        <div class="sw-worker sprite sprite-miner_idle" style="animation-delay: 0.15s;"></div>
+                        <div class="sw-worker sprite sprite-miner2_idle" style="animation-delay: 0.3s;"></div>
                     </div>
 
                     <div class="surface-cart">
@@ -125,12 +108,7 @@
                             <div class="cart-wheel w1"></div>
                             <div class="cart-wheel w2"></div>
                         </div>
-                        <div class="cart-pusher">
-                            <div class="cp-helmet"></div>
-                            <div class="cp-body"></div>
-                            <div class="cp-arms"></div>
-                            <div class="cp-legs"></div>
-                        </div>
+                        <div class="cart-pusher sprite sprite-ground_worker"></div>
                     </div>
 
                     <div class="elevator-top">
@@ -161,10 +139,7 @@
                             <div class="elevator-body">
                                 <div class="elevator-door left-door" id="door-left"></div>
                                 <div class="elevator-door right-door" id="door-right"></div>
-                                <div class="elevator-worker-inside">
-                                    <div class="ew-helmet"></div>
-                                    <div class="ew-body"></div>
-                                </div>
+                                <div class="elevator-worker-inside sprite sprite-elevator_worker"></div>
                             </div>
                             <div class="elevator-floor-indicator" id="elevator-floor">1F</div>
                         </div>

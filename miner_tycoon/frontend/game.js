@@ -53,13 +53,16 @@ function getOreColor(depth) {
 }
 
 function createMinerHTML(helmetColor = '#FFD700', bodyColor = '#4169E1') {
+    const spriteMap = {
+        '#FFD700_#4169E1': 'miner_idle',
+        '#FF9800_#4CAF50': 'miner2_idle',
+        '#E91E63_#795548': 'miner3_idle',
+    };
+    const key = `${helmetColor}_${bodyColor}`;
+    const spriteName = spriteMap[key] || 'miner_idle';
+    
     return `
-        <div class="layer-miner">
-            <div class="lm-helmet" style="background: linear-gradient(180deg, ${helmetColor}, ${adjustColor(helmetColor, -30)}); border-color: ${adjustColor(helmetColor, -50)};"></div>
-            <div class="lm-face"></div>
-            <div class="lm-body" style="background: linear-gradient(180deg, ${bodyColor}, ${adjustColor(bodyColor, -30)}); border-color: ${adjustColor(bodyColor, -50)};"></div>
-            <div class="lm-pickaxe"></div>
-        </div>
+        <div class="layer-miner sprite sprite-${spriteName}"></div>
     `;
 }
 

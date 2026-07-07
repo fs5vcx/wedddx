@@ -54,7 +54,7 @@
       "row": 0,
       "col": 5
     },
-    "elevator_worker_idle": {
+    "elevator_worker": {
       "x": 0,
       "y": 128,
       "width": 128,
@@ -62,7 +62,7 @@
       "row": 1,
       "col": 0
     },
-    "elevator_worker_working": {
+    "ground_worker": {
       "x": 128,
       "y": 128,
       "width": 128,
@@ -70,7 +70,7 @@
       "row": 1,
       "col": 1
     },
-    "ground_worker_idle": {
+    "supervisor": {
       "x": 256,
       "y": 128,
       "width": 128,
@@ -78,7 +78,7 @@
       "row": 1,
       "col": 2
     },
-    "ground_worker_pushing": {
+    "shopkeeper": {
       "x": 384,
       "y": 128,
       "width": 128,
@@ -86,7 +86,7 @@
       "row": 1,
       "col": 3
     },
-    "supervisor_miner": {
+    "engineer": {
       "x": 512,
       "y": 128,
       "width": 128,
@@ -94,7 +94,7 @@
       "row": 1,
       "col": 4
     },
-    "supervisor_elevator": {
+    "chef": {
       "x": 640,
       "y": 128,
       "width": 128,
@@ -102,7 +102,7 @@
       "row": 1,
       "col": 5
     },
-    "elevator_closed": {
+    "pickaxe_iron": {
       "x": 0,
       "y": 256,
       "width": 128,
@@ -110,7 +110,7 @@
       "row": 2,
       "col": 0
     },
-    "elevator_open": {
+    "pickaxe_gold": {
       "x": 128,
       "y": 256,
       "width": 128,
@@ -118,7 +118,7 @@
       "row": 2,
       "col": 1
     },
-    "minecart_empty": {
+    "pickaxe_diamond": {
       "x": 256,
       "y": 256,
       "width": 128,
@@ -126,7 +126,7 @@
       "row": 2,
       "col": 2
     },
-    "minecart_full": {
+    "ore_small": {
       "x": 384,
       "y": 256,
       "width": 128,
@@ -134,7 +134,7 @@
       "row": 2,
       "col": 3
     },
-    "pickaxe_iron": {
+    "gem_ruby": {
       "x": 512,
       "y": 256,
       "width": 128,
@@ -142,7 +142,7 @@
       "row": 2,
       "col": 4
     },
-    "pickaxe_gold": {
+    "gem_emerald": {
       "x": 640,
       "y": 256,
       "width": 128,
@@ -238,7 +238,7 @@
       "row": 4,
       "col": 4
     },
-    "icon_pickaxe": {
+    "icon_star": {
       "x": 640,
       "y": 512,
       "width": 128,
@@ -246,7 +246,7 @@
       "row": 4,
       "col": 5
     },
-    "icon_elevator": {
+    "icon_lock": {
       "x": 0,
       "y": 640,
       "width": 128,
@@ -254,7 +254,7 @@
       "row": 5,
       "col": 0
     },
-    "icon_factory": {
+    "icon_check": {
       "x": 128,
       "y": 640,
       "width": 128,
@@ -262,7 +262,7 @@
       "row": 5,
       "col": 1
     },
-    "icon_mountain": {
+    "icon_pickaxe": {
       "x": 256,
       "y": 640,
       "width": 128,
@@ -270,7 +270,7 @@
       "row": 5,
       "col": 2
     },
-    "icon_lock": {
+    "icon_elevator": {
       "x": 384,
       "y": 640,
       "width": 128,
@@ -278,7 +278,7 @@
       "row": 5,
       "col": 3
     },
-    "icon_check": {
+    "icon_factory": {
       "x": 512,
       "y": 640,
       "width": 128,
@@ -286,7 +286,7 @@
       "row": 5,
       "col": 4
     },
-    "icon_star": {
+    "icon_mountain": {
       "x": 640,
       "y": 640,
       "width": 128,
@@ -310,7 +310,7 @@
       "row": 6,
       "col": 1
     },
-    "elevator_top": {
+    "tower_red": {
       "x": 256,
       "y": 768,
       "width": 128,
@@ -318,7 +318,7 @@
       "row": 6,
       "col": 2
     },
-    "mine_tunnel": {
+    "minecart_empty": {
       "x": 384,
       "y": 768,
       "width": 128,
@@ -326,7 +326,7 @@
       "row": 6,
       "col": 3
     },
-    "mine_lamp": {
+    "minecart_full": {
       "x": 512,
       "y": 768,
       "width": 128,
@@ -334,7 +334,7 @@
       "row": 6,
       "col": 4
     },
-    "flag_red": {
+    "elevator_closed": {
       "x": 640,
       "y": 768,
       "width": 128,
