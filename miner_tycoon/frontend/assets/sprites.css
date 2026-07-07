@@ -1,0 +1,201 @@
+/* 游戏精灵图 CSS */
+.sprite {
+    background-image: url('sprites.png');
+    background-size: 768px 1024px;
+    width: 128px;
+    height: 128px;
+    display: inline-block;
+}
+
+.sprite-miner_idle {
+    background-position: -0px -0px;
+}
+
+.sprite-miner_mining {
+    background-position: -128px -0px;
+}
+
+.sprite-miner_walk {
+    background-position: -256px -0px;
+}
+
+.sprite-miner2_idle {
+    background-position: -384px -0px;
+}
+
+.sprite-miner2_mining {
+    background-position: -512px -0px;
+}
+
+.sprite-miner3_idle {
+    background-position: -640px -0px;
+}
+
+.sprite-elevator_worker_idle {
+    background-position: -0px -128px;
+}
+
+.sprite-elevator_worker_working {
+    background-position: -128px -128px;
+}
+
+.sprite-ground_worker_idle {
+    background-position: -256px -128px;
+}
+
+.sprite-ground_worker_pushing {
+    background-position: -384px -128px;
+}
+
+.sprite-supervisor_miner {
+    background-position: -512px -128px;
+}
+
+.sprite-supervisor_elevator {
+    background-position: -640px -128px;
+}
+
+.sprite-elevator_closed {
+    background-position: -0px -256px;
+}
+
+.sprite-elevator_open {
+    background-position: -128px -256px;
+}
+
+.sprite-minecart_empty {
+    background-position: -256px -256px;
+}
+
+.sprite-minecart_full {
+    background-position: -384px -256px;
+}
+
+.sprite-pickaxe_iron {
+    background-position: -512px -256px;
+}
+
+.sprite-pickaxe_gold {
+    background-position: -640px -256px;
+}
+
+.sprite-ore_gold {
+    background-position: -0px -384px;
+}
+
+.sprite-ore_copper {
+    background-position: -128px -384px;
+}
+
+.sprite-ore_silver {
+    background-position: -256px -384px;
+}
+
+.sprite-ore_diamond {
+    background-position: -384px -384px;
+}
+
+.sprite-ore_ruby {
+    background-position: -512px -384px;
+}
+
+.sprite-ore_emerald {
+    background-position: -640px -384px;
+}
+
+.sprite-icon_gold {
+    background-position: -0px -512px;
+}
+
+.sprite-icon_gem {
+    background-position: -128px -512px;
+}
+
+.sprite-icon_cash {
+    background-position: -256px -512px;
+}
+
+.sprite-icon_settings {
+    background-position: -384px -512px;
+}
+
+.sprite-icon_music {
+    background-position: -512px -512px;
+}
+
+.sprite-icon_pickaxe {
+    background-position: -640px -512px;
+}
+
+.sprite-icon_elevator {
+    background-position: -0px -640px;
+}
+
+.sprite-icon_factory {
+    background-position: -128px -640px;
+}
+
+.sprite-icon_mountain {
+    background-position: -256px -640px;
+}
+
+.sprite-icon_lock {
+    background-position: -384px -640px;
+}
+
+.sprite-icon_check {
+    background-position: -512px -640px;
+}
+
+.sprite-icon_star {
+    background-position: -640px -640px;
+}
+
+.sprite-tower_blue {
+    background-position: -0px -768px;
+}
+
+.sprite-tower_green {
+    background-position: -128px -768px;
+}
+
+.sprite-elevator_top {
+    background-position: -256px -768px;
+}
+
+.sprite-mine_tunnel {
+    background-position: -384px -768px;
+}
+
+.sprite-mine_lamp {
+    background-position: -512px -768px;
+}
+
+.sprite-flag_red {
+    background-position: -640px -768px;
+}
+
+.sprite-effect_mining_1 {
+    background-position: -0px -896px;
+}
+
+.sprite-effect_mining_2 {
+    background-position: -128px -896px;
+}
+
+.sprite-effect_mining_3 {
+    background-position: -256px -896px;
+}
+
+.sprite-effect_gold_1 {
+    background-position: -384px -896px;
+}
+
+.sprite-effect_gold_2 {
+    background-position: -512px -896px;
+}
+
+.sprite-effect_sparkle {
+    background-position: -640px -896px;
+}
+
